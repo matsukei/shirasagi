@@ -1,10 +1,16 @@
-<% controller.class.javascript "cms/form" %>
-<%= html_editor ".mod-cms-body .html" %>
+<% if @item.try('editor_type_is_code?') %>
+  <%= code_editor ".mod-cms-body textarea", mode: :html %>
+<% else %>
+  <% controller.class.javascript "cms/form" %>
+  <%= html_editor ".mod-cms-body .html" %>
+<% end %>
 
 <dl class="see mod-cms-body">
   <dd class="wide"><%= f.text_area :html, class: "html", style: "height: 400px;" %></dd>
-  <dd class="wide">
-  <%= button_tag t("cms.syntax_check"), { type: :button, class: "syntax-check" } %>
-  <%= button_tag t("cms.link_check"), { type: :button, class: "link-check" } %>
-  </dd>
+  <% unless @item.try('editor_type_is_code?') %>
+    <dd class="wide">
+    <%= button_tag t("cms.syntax_check"), { type: :button, class: "syntax-check" } %>
+    <%= button_tag t("cms.link_check"), { type: :button, class: "link-check" } %>
+    </dd>
+  <% end %>
 </dl>

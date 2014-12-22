@@ -18,4 +18,8 @@ class Cms::Page
   include History::Addon::Backup
 
   index({ site_id: 1, filename: 1 }, { unique: true })
+
+  def editor_type_is_code?
+    return true
+  end
 end
